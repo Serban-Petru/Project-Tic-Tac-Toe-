@@ -1,11 +1,12 @@
-const playerList = [];
+let flag = true;
 
-const playGroundMatrix =
+const playGroundMatrix = 
 [
-    [['#'],['#'],['x']],
-    [['x'],['x'],['x']],
-    [['o'],['o'],['o']]
+    ['','',''],
+    ['','',''],
+    ['','','']
 ];
+
 
 function clearplayGroundMatrix(){
     for (let i = 0; i < playGroundMatrix.length; i++) {
@@ -23,8 +24,20 @@ function gameLogic(){
                 if(String(playGroundMatrix[j][i]) === 'x') flagCount_x++;
                 if(String(playGroundMatrix[j][i]) === 'o') flagCount_o++; 
             }
-            if(flagCount_x === 3)   console.log(`pe linia ${i} asta este x boss`); //daca castiga!!
-            if(flagCount_o === 3)   console.log(`pe linia ${i} asta este o boss`); //daca castiga!!
+            if(flagCount_x === 3){ 
+                console.log(`pe linia  asta este x boss`); //daca castiga!!
+                playerList[0].points++;
+                flag = false;
+                console.log("CASTIG!");
+                return flag;
+            }
+            if(flagCount_o === 3){   
+                console.log(`pe linia asta este o boss`); //daca castiga!!
+                playerList[1].points++;
+                flag = false;
+                console.log("CASTIG!");
+                return flag;
+            }
             flagCount_x = 0; flagCount_o = 0;
         }
     }
@@ -36,8 +49,20 @@ function gameLogic(){
                 if(String(playGroundMatrix[i][j]) === 'x') flagCount_x++;
                 if(String(playGroundMatrix[i][j]) === 'o') flagCount_o++; 
             }
-            if(flagCount_x === 3)   console.log(`pe linia ${i} ORIZONTALA asta este x boss`); //daca castiga!!
-            if(flagCount_o === 3)   console.log(`pe linia ${i} ORIZONTALA asta este o boss`); //daca castiga!!
+            if(flagCount_x === 3){ 
+                console.log(`pe linia  asta este x boss`); //daca castiga!!
+                playerList[0].points++;
+                flag = false;
+                console.log("CASTIG!");
+                return flag;
+            }
+            if(flagCount_o === 3){   
+                console.log(`pe linia asta este o boss`); //daca castiga!!
+                playerList[1].points++;
+                flag = false;
+                console.log("CASTIG!");
+                return flag;
+            }
             flagCount_x = 0; flagCount_o = 0;
         }
     }
@@ -48,8 +73,20 @@ function gameLogic(){
             if(String(playGroundMatrix[i][i]) === 'x') flagCount_x++;
             if(String(playGroundMatrix[i][i]) === 'o') flagCount_o++; 
         }
-        if(flagCount_x === 3)   console.log(`pe diagonala asta este x boss`); //daca castiga!!
-        if(flagCount_o === 3)   console.log(`pe diagonala asta este o boss`); //daca castiga!!
+            if(flagCount_x === 3){ 
+                console.log(`pe linia asta este x boss`); //daca castiga!!
+                playerList[0].points++;
+                flag = false;
+                console.log("CASTIG!");
+                return flag;
+            }
+            if(flagCount_o === 3){   
+                console.log(`pe linia asta este o boss`); //daca castiga!!
+                playerList[1].points++;
+                flag = false;
+                console.log("CASTIG!");
+                return flag;
+            }
     }
 
     function seconderyDiagonalLineCheck(){
@@ -62,8 +99,18 @@ function gameLogic(){
                 } 
             }
         }
-        if(flagCount_x === 3)   console.log(`pe diagonala SECUNDARA asta este x boss`); //daca castiga!!
-        if(flagCount_o === 3)   console.log(`pe diagonala SECUNDARA asta este o boss`); //daca castiga!!
+        if(flagCount_x === 3){ 
+            playerList[0].points++;
+            flag = false;
+            console.log("CASTIG!");
+            return flag;
+        }
+        if(flagCount_o === 3){   
+            playerList[1].points++;
+            flag = false;
+            console.log("CASTIG!");
+            return flag;
+        }
     }
     
     verticalLineCheck();
@@ -72,21 +119,40 @@ function gameLogic(){
     seconderyDiagonalLineCheck();
 }
 
+function playerChoise(marker){
+    if(marker % 2 === 0){
+        const poz_x = prompt(`${playerList[0].name} moves with ${playerList[0].marker}`).split("");
+        if(playGroundMatrix[Number(poz_x[0])][Number(poz_x[1])] === ''){ 
+            playGroundMatrix[Number(poz_x[0])][Number(poz_x[1])] = playerList[0].marker;
+            return 1;
+        }
+        else
+            return 0;
+    }
+    else{
+        const poz_o = prompt(`${playerList[1].name} moves with ${playerList[1].marker}`).split("");
+        if(playGroundMatrix[Number(poz_o[0])][Number(poz_o[1])] === ''){ 
+            playGroundMatrix[Number(poz_o[0])][Number(poz_o[1])]=  playerList[1].marker;
+            return 1;
+        }
+        else
+            return 0;
+    }
+    // return;
+}
 
-gameLogic();
 
+function gameLoop(){
+    let i = 0;
+    let contor = 0;
+    while(flag === true){   
+        contor = playerChoise(i);
+        gameLogic();
+        console.table(playGroundMatrix);
+        i = i + contor;
+    }
+}
 
+register();
+gameLoop();
 
-
-// function Player(name, marker){
-//     this.name = name;
-//     this.marker = marker;
-// }
-
-// function makePlayer(name, marker){
-//     const player = new Player(name,marker);
-//     playerList.push(player);
-// }
-
-// makePlayer("ceva", "o");
-// makePlayer("altceva", "x");
