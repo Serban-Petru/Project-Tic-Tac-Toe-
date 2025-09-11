@@ -1,0 +1,68 @@
+body,html {
+  background: linear-gradient(to right, #c92a2adb, hwb(297 0% 0% / 0.583));
+  height: 100%;
+}
+
+.main{
+    height: 100%;
+    align-content: center;
+}
+
+.player{
+    display: flex;
+    border: solid 2px black;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 80%;
+}
+
+.table{
+    border: solid 2px black;
+    display: flex;
+   justify-content: center;
+   align-items: center;
+   
+}
+
+.playground{
+    width: 80%;
+    height: 80%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,1fr);
+    gap:2px;
+    min-height: 0;  /* NEW */
+    min-width: 0;   /* NEW; needed for Firefox */
+}
+
+.pos{
+  border: solid 3px white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+@media (max-width: 480px){
+    .player{
+        display: none;
+    }
+    .grid{
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 930px){
+    .grid{
+        height: 50%;
+    }
+
+}
+
+
+
+
